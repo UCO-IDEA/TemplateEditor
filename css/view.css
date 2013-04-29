@@ -1,0 +1,82 @@
+.sliders {
+	width: 175px;
+	margin: 10px;
+	display: block;
+}
+
+*[readonly] {
+  border: none;
+  background-color: rgba(255,255,255,0);
+}
+
+.placeholder {
+	width: 20%;
+	display:inline;
+}
+
+.color {
+	width: 70px;
+	font-family: Courier, monospace !important;
+}
+
+.editorTable {
+	border: 1px solid #000 !important;
+}
+
+.editorTable td, .editorTable tr, .editorTable th {
+	color: #000 !important;
+	padding: 10px !important;
+	border: 1px solid #000 !important;
+	background-color: rgba(0,0,0,0) !important;
+}
+
+.editorTable tr:nth-child(even) {
+	background-color: #CCCCCC !important;
+}
+
+.editorTable th {
+	background-color: #224477 !important;
+	color: #FFF !important;
+	font-weight: bold;
+}
+
+#popup, #newFilePopup {
+	background-color: #DDDDDD;
+	border-radius: 15px;
+	display: none;
+	position: fixed; 
+	top: 25%;
+	left: 25%;
+	width: 50%;
+	height: 50%;
+	z-index: 200;
+	padding: 10px;
+}
+
+#popupContainer {
+	position: relative;
+}
+
+#popup #content {
+	width: 99%;
+	margin: auto;
+	height: 80%;
+}
+
+#popupClose, #filePopupClose {
+	position: absolute;
+	top: -10px; right: -10px;
+	background-color: #DDD;
+	border: outset;
+	border-color: #EEE;
+	text-decoration: none !important;
+	color: #0055FF !important;
+}
+
+body .noImage {
+	background-image: none;
+}
+
+div.controls#tabs input {
+	
+}

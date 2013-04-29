@@ -1,0 +1,114 @@
+html body {
+	font-size: 100%;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;/*Font1*//*Body*/
+	background-image: none;/*Image1*//*Background*/
+	background-color: #386289;/*Color1*//*Background Color*/
+}
+blockquote {
+	font-style:italic;
+}
+#overlay {
+	position: fixed;
+	z-index: -1;
+	top:0; left:0;
+	width: 100%;
+	height: 100%;
+	
+	background-color: #386289;/*Color1*/
+	opacity: .8;/*Opacity1*//*Background Overlay*/
+	filter:Alpha(opacity=80);/*Opacity1Filter*/
+}
+
+.container {
+	background-color: #F4F9FD;/*Color2*//*Body Background*/
+	opacity: 1;/*Opacity2*//*Body*/
+	filter:Alpha(opacity=100);/*Opacity2Filter*/
+	color: #333333;/*Color4*//*Body Text*/
+}
+
+#header {
+	width: 100%;
+}
+#footer {
+	margin-top: 20px;
+	background-color: #062C59;/*Color3*//*Footer Background*/
+	color: #FFFFFF;/*Color7*//*Footer Text*/
+	font-size: 12px;/*FontSize3*//*Footer Text*/
+	text-align: center;
+	padding: 5px 0;
+}
+
+#main {
+	color: #333333;/*Color4*//*Body Text*/
+	font-size: 16px;/*FontSize1*//*Body Text*/
+	padding:5px 100px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: Arial sans-serif;/*Font2*//*Header*/
+	color: #003366;/*Color5*//*Header*/
+	border-bottom-style: none;/*BorderStyle1*//*Header Underline*/
+	border-color: #386289;/*Color8*//*Header Underline*/
+	border-width: 1px;/*BorderWidth1*//*Header Underline*/
+}
+h1 {
+	font-size: 38.5px;/*h1Size*/
+}
+h2 {
+	font-size: 31.5px;/*h2Size*/
+}
+h3 {
+	font-size: 24.5px;/*h3Size*/
+}
+h4 {
+	font-size: 17.5px;/*h4Size*/
+}
+h5 {
+	font-size: 14px;/*h5Size*/
+}
+h6 {
+	font-size: 11.9px;/*h6Size*/
+}
+.center {
+	text-align: center;
+}
+td,th {
+	border-style: none;/*BorderStyle2*//*Table*/
+	border-color: #386289;/*Color11*//*Table Border*/
+	border-width: 1px;/*BorderWidth2*//*Table*/
+}
+th {
+	vertical-align: top;
+	font-weight: normal;
+	font-size: 16px;/*FontSize2*//*Table Header*/
+	background-color: #0C6A98;/*Color6*//*Table Header*/
+	color: #F4F9FD;/*Color2*//*Table Header Text*/
+	text-align:center;
+}
+table {
+	border-collapse:collapse;
+}
+tr:nth-child(even) {
+	background: #CCCCCC;/*Color9*//*Even Row*/
+}
+tr:nth-child(odd) {
+	background: #FFFFFF;/*Color10*//*Odd Row*/
+}
+td
+{
+	text-align:center;
+	padding:5px;
+}
+a, .unvisted {
+
+}
+a:visited, .visited {
+
+}
+a:hover, .hover {
+
+}
+blockquote {
+	background-image: none;/*BlockImage1*//*Blockquote Image*/
+	background-repeat: no-repeat;
+	background-position: top left;
+}
