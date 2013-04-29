@@ -10,7 +10,7 @@
 	$fontOptions = "
 		<option class='fontOption' value='Arial, Helvetica, sans-serif'>Arial</option>
 		<option class='fontOption' value='Georgia, serif'>Georgia</option>
-		<option class='fontOption' value='\"Helvetica Neue\", Helvetica, Arial, sans-serif;'>Helvetica</option>
+		<option class='fontOption' value='\"Helvetica Neue\", Helvetica, Arial, sans-serif'>Helvetica</option>
 		<option class='fontOption' value='Tahoma, Geneva, sans-serif'>Tahoma</option>
 		<option class='fontOption' value='Verdana, Verdana, Geneva, sans-serif'>Verdana</option>
 	";

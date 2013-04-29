@@ -1,8 +1,8 @@
 html body {
 	font-size: 100%;
-	font-family: "Helvetica Neue"Georgia, serif; /*Font1*//*Body*/
-	background-image:url("../img/Subtile_Diamonds.png"); /*Image1*//*Background*/
-	background-color: #168af0; /*Color1*//*Background Color*/
+	font-family: "Helvetica Neue""Helvetica Neue", Helvetica, Arial, sans-serif;; /*Font1*//*Body*/
+	background-image:url("../img/furley_bg.png"); /*Image1*//*Background*/
+	background-color: #466bcf; /*Color1*//*Background Color*/
 }
 blockquote {
 	font-style:italic;
@@ -14,16 +14,16 @@ blockquote {
 	width: 100%;
 	height: 100%;
 	
-	background-color: #168af0; /*Color1*/
-	opacity:0.43; /*Opacity1*//*Background Overlay*/
-	filter:Alpha(opacity=43); /*Opacity1Filter*/
+	background-color: #466bcf; /*Color1*/
+	opacity:0.24; /*Opacity1*//*Background Overlay*/
+	filter:Alpha(opacity=24); /*Opacity1Filter*/
 }
 
 .container {
-	background-color: #c7c7c7; /*Color2*//*Body Background*/
-	opacity:0.75; /*Opacity2*//*Body*/
-	filter:Alpha(opacity=75); /*Opacity2Filter*/
-	color: #65a365; /*Color4*//*Body Text*/
+	background-color: #ffffff; /*Color2*//*Body Background*/
+	opacity:1; /*Opacity2*//*Body*/
+	filter:Alpha(opacity=100); /*Opacity2Filter*/
+	color: #333333; /*Color4*//*Body Text*/
 }
 
 #header {
@@ -31,23 +31,23 @@ blockquote {
 }
 #footer {
 	margin-top: 20px;
-	background-color: #083538; /*Color3*//*Footer Background*/
-	color: #0a000a; /*Color7*//*Footer Text*/
-	font-size:10px; /*FontSize3*//*Footer Text*/
+	background-color: #062C59; /*Color3*//*Footer Background*/
+	color: #FFFFFF; /*Color7*//*Footer Text*/
+	font-size: 12px; /*FontSize3*//*Footer Text*/
 	text-align: center;
 	padding: 5px 0;
 }
 
 #main {
-	color: #65a365; /*Color4*//*Body Text*/
-	font-size:10px; /*FontSize1*//*Body Text*/
+	color: #333333; /*Color4*//*Body Text*/
+	font-size: 16px; /*FontSize1*//*Body Text*/
 	padding:5px 100px;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;; /*Font2*//*Header*/
-	color: #28fae9; /*Color5*//*Header*/
-	border-bottom-style: dotted; /*BorderStyle1*//*Header Underline*/
-	border-color: #ffffff; /*Color8*//*Header Underline*/
+	color: #003366; /*Color5*//*Header*/
+	border-bottom-style: none; /*BorderStyle1*//*Header Underline*/
+	border-color: #386289; /*Color8*//*Header Underline*/
 	border-width: 2px; /*BorderWidth1*//*Header Underline*/
 }
 h1 {
@@ -72,26 +72,26 @@ h6 {
 	text-align: center;
 }
 td,th {
-	border-style: dashed; /*BorderStyle2*//*Table*/
-	border-color: #168af0; /*Color11*//*Table Border*/
-	border-width: 4px; /*BorderWidth2*//*Table*/
+	border-style: none; /*BorderStyle2*//*Table*/
+	border-color: #466bcf; /*Color11*//*Table Border*/
+	border-width: 2px; /*BorderWidth2*//*Table*/
 }
 th {
 	vertical-align: top;
 	font-weight: normal;
-	font-size:10px; /*FontSize2*//*Table Header*/
-	background-color: #960c91; /*Color6*//*Table Header*/
-	color: #c7c7c7; /*Color2*//*Table Header Text*/
+	font-size: 16px; /*FontSize2*//*Table Header*/
+	background-color: #0C6A98; /*Color6*//*Table Header*/
+	color: #ffffff; /*Color2*//*Table Header Text*/
 	text-align:center;
 }
 table {
 	border-collapse:collapse;
 }
 tr:nth-child(even) {
-	background: #bd40bd; /*Color9*//*Even Row*/
+	background: #CCCCCC; /*Color9*//*Even Row*/
 }
 tr:nth-child(odd) {
-	background: #168af0; /*Color10*//*Odd Row*/
+	background: #466bcf; /*Color10*//*Odd Row*/
 }
 td
 {

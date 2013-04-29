@@ -48,7 +48,7 @@ function changeColor(colorName, newColor) {
 }
 
 function changeFont(fontName, newFont) {
-	var regex = new RegExp(": [A-z, -]+;/\\*" + fontName+ "\\*/", "gi");
+	var regex = new RegExp(": [A-z,\" -]+;/\\*" + fontName+ "\\*/", "gi");
 	$('#contentCSS', iFrame).html($('#contentCSS', iFrame).html().replace(regex, ": " + newFont + ";/*" + fontName + "*/"));
 	resetMCE();
 }
@@ -114,6 +114,8 @@ function changeHeaders(val) {
 	for (var i = 1; i <= 6; i++) {
 		var regex = new RegExp(": [0-9\\.em ]+;/\\*h" + i + "Size", "gi");
 		
+		console.log(regex + " " + regex.test($('#contentCSS', iFrame).html()));
+		
 		$('#contentCSS', iFrame).html($('#contentCSS', iFrame).html().replace(regex, ": " + h[i] + "em;/*h" + i + "Size"));
 	}
 	resetMCE();
@@ -163,6 +165,9 @@ function changePage(id) {
  var iFrame;
  var hasContent = false;
  function setValues() {
+	if (!hasValues) {
+		return;
+	}
    for (var key in values) {
 		var num = '0';
 	
@@ -377,7 +382,7 @@ $(document).ready(function() {
 	});
 	
 	$(".fontSelectors > select").change(function() {
-		changeFont($(this).attr('id'), $(this).attr('value'));
+		changeFont($(this).attr('id'), $(this).val());
 	});
 	
 	$('.color').colorpicker({
