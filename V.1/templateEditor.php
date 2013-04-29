@@ -1,8 +1,10 @@
 <?php
+	header('Content-Type: text/html; charset=utf-8');
+
 	function extractContent($start, $end, $content) {
 		$begin = strpos($content, $start);
 		$stop = strpos($content, $end, $begin);
-		return substr($content, $begin, $stop-$begin);
+		return substr($content, $begin + strlen($start), $stop-$begin - strlen($start));
 	}
 	
 	$fontOptions = "
@@ -13,10 +15,10 @@
 	";
 	
 	$borderStyleOptions = "
-		<option class='borderStyleOptions' value='none'>none</option>
+		<option class='borderStyleOptions' value='none' selected='selected'>none</option>
 		<option class='borderStyleOptions' value='dotted'>dotted</option>
 		<option class='borderStyleOptions' value='dashed'>dashed</option>
-		<option class='borderStyleOptions' value='solid' selected='selected'>solid</option>
+		<option class='borderStyleOptions' value='solid'>solid</option>
 	";
 
 	$fontSizeOptions = "
@@ -61,7 +63,9 @@
 	
 	$headContent = extractContent("<head>", "</head>", $content);
 	
-	$cssContent = extractContent("<style", "</style>", $headContent);
+	$cssContent = extractContent("<style id='contentCSS' type=\"text/css\">", "</style>", $headContent);
+	
+	
 	
 	$bodyContent = extractContent("<body>", "</body>", $content);
 	
@@ -76,16 +80,34 @@
 	<head>
 		<title>Template Editor</title>
 		
-		<script type='text/javascript' src='js/jquery-1.7.2.min.js'></script>
-		<script type='text/javascript' src='js/jquery-ui-1.8.22.custom.min.js'></script>
-		<script type='text/javascript' src='templateEditor.js'></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
+		<script type="text/javascript" src='templateEditor.js'></script>
+		<script type="text/javascript" src="js/colorpicker.js"></script>
+		
 		<link rel="stylesheet" media="screen" type="text/css" href="css/jquery-ui-1.8.22.custom.css" />
 		<link rel="stylesheet" media="screen" type="text/css" href="css/view.css" />
 		<link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
-		<script type="text/javascript" src="js/colorpicker.js"></script>
+		
 		<?php echo $headContent; ?>
 	</head>
 	<body>
+		<div id='popup'>
+			<div id='popupContainer'>
+				<a href='#' id='popupClose'>&times;</a>
+				<textarea id='content'></textarea>
+				<input type='hidden' id='toUpdate' value="" />
+				<button id='popupSubmit'>Submit Changes</button>
+			</div>
+		</div>
+		<div id='newFilePopup'>
+			<a href='#' id='filePopupClose'>&times;</a>
+			<h2>Create a new File</h2>
+			File Name:<input type='text' id='newFileName' /><br />
+			Page Title:<input type='text' id='newPageTitle' /><br />
+			<button type='button' id='newFileSubmit'>Submit</button>
+		</div>
 		<form method='post' action='downloadTemplate.php'>
 			<div class='controls' id='tabs'>
 				<ul>
@@ -209,7 +231,8 @@
 					Border/Underline Styles:
 						<?php
 							$borderCount = 1;
-							
+							echo "<table class='editorTable'>";
+							echo "<tr><th>Changes</th><th>Thickness</th><th>Border Style</th></tr>";
 							while (strpos($cssContent, "/*BorderWidth$borderCount") !== false) {
 								$pos = strpos($cssContent, "/*BorderWidth$borderCount");
 								$start = strrpos($cssContent, ": ", -(strlen($cssContent) - $pos)) + 2;
@@ -217,24 +240,33 @@
 								$currentVal = substr($cssContent, $start, $end - $start-1);
 								$for = getDescription($pos);
 								
-								echo "$for<input type='text' class='borderWidthChange' id='BorderWidth$borderCount' name='BorderWidth$borderCount' value='$currentVal' readonly='readonly'/><span class='BorderWidthChange sliders' id='$borderCount'></span>";
+								echo "<tr><td>$for</td><td><input type='text' class='borderWidthChange' id='BorderWidth$borderCount' name='BorderWidth$borderCount' value='$currentVal' readonly='readonly'/><div style='width: 200px;' class='BorderWidthChange BorderSliders' id='$borderCount'></div></td><td>";
 								
 								if (strpos($cssContent, "/*BorderStyle$borderCount") !== false) {
 									echo "<select class='borderStyleChange' id='BorderStyle$borderCount' name='BorderStyle$borderCount'>$borderStyleOptions</select>";
 								}
 								
+								echo "</td></tr>";
+								
 								$borderCount++;
 							}
+							echo "</table>";
 						?>
 					</div>
 				</div>
-				<div class='submit'>
+				<div>
 					<input type='hidden' name='file' id='file' value='<?php echo $file;?>' />
-					<button id='submit' name='submit'>download</button>
+					<button id='btnEditContent' type='button'>Edit Content</button>
+					<button id='submit' name='submit'>Download</button>
+					<div id='contentPages'>
+						
+					</div>
 				</div>
 		</div>
 		<div id='editorContent' style="padding: 5px; border: 1px solid black;">
-			<?php echo $bodyContent; ?>
+			<?php 
+				echo $bodyContent; 
+			?>
 		</div>
 		</form>
 	</body>

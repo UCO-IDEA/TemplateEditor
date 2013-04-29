@@ -101,6 +101,8 @@
 				if (isset($values)) {
 					echo "var values =  ".json_encode($values) .";";
 					echo "var hasValues = true;";
+				} else {
+					echo "var hasValues = false;";
 				}
 			?>
 		</script>
@@ -109,10 +111,10 @@
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
-		<script src="jquery.colorpicker.js"></script>
-		<script type="text/javascript" src='templateEditorIframe.js'></script>
+		<script type="text/javascript" src="js/jquery.colorpicker.js"></script>
+		<script type="text/javascript" src='js/templateEditorIframe.js'></script>
 		
-		<link href="jquery.colorpicker.css" rel="stylesheet" type="text/css"/>
+		<link href="css/jquery.colorpicker.css" rel="stylesheet" type="text/css"/>
 		<link rel="stylesheet" media="screen" type="text/css" href="css/jquery-ui-1.8.22.custom.css" />
 		<link rel="stylesheet" media="screen" type="text/css" href="css/view.css" />
 		<link rel="stylesheet" media="screen" type="text/css" href="css/iFrameLayout.css" />
