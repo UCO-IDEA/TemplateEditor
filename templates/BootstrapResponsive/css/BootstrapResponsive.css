@@ -49,6 +49,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-bottom-style: none;/*BorderStyle1*//*Header Underline*/
 	border-color: #386289;/*Color8*//*Header Underline*/
 	border-width: 1px;/*BorderWidth1*//*Header Underline*/
+	padding-bottom: 5px;
 }
 h1 {
 	font-size: 2.406em;/*h1Size*/

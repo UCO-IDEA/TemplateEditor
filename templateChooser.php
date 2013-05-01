@@ -8,32 +8,41 @@
 		
 		<script src="js/bootstrap.min.js"></script>
 	</head>
+	
 	<body>
 		<div class='container'>
 			<div class='row'>
 				<div class='span12'>
-					<h2>Click on a template to edit it</h2>
+					<h2>Click on a template to customize it</h2>
 					<?php 
 						$dir = getcwd() . "/templates";
-
+						
 						// Open a known directory, and proceed to read its contents
 						if (is_dir($dir)) {
 							if ($dh = opendir($dir)) {
 								while (($file = readdir($dh)) !== false) {
-									if (strstr($file, "Template")) {
-										echo "<a href='templateEditor.php?file=$file'>$file</a>";
+									if ($file != '.' && $file != '..') {
+										echo "<a href='templateEditorIframe.php?file=$file\\".$file."Template.html'>$file</a>";
+										$premadeDir = $dir . "/$file/Premade";
+										if (is_dir($premadeDir) && $premadeHandle = opendir($premadeDir)) {
+											echo "<div class='row'>";
+											while (($premade = readdir($premadeHandle)) !== false) {
+												if ($premade != '.' && $premade != '..') {
+													echo "<div class='offset1 span10'><a href='templateEditorIframe.php?template=$file/Premade/$premade'>".str_replace(".template", "", $premade)."</a></div>";
+												}
+											}
+											echo "</div>";
+										}
+										
 									}
 								}
 								closedir($dh);
 							}
 						}
 					?>
-					<a href='templateEditorIframe.php?file=OneColumn\OneColumnTemplate.html'>OneColumnTemplate.html</a><br />
-					<a href='templateEditorIframe.php?file=BootstrapResponsive\BootstrapResponsiveTemplate.html'>BootstrapResponsiveTemplate.html</a>
-					<h2>Or upload json to edit a template</h2>
+					<h3>Or upload template to edit</h3>
 					<form action='templateEditorIframe.php' method='post' enctype="multipart/form-data">
-						<label for="file">json file:</label>
-						<input type="file" name="file" id="file"><br>
+						<label for="file">template file: <input type="file" name="file" id="file"></label>
 						<input type="submit" name="submit" value="Submit">
 					</form>
 				</div>

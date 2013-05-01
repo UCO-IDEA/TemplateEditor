@@ -102,7 +102,7 @@ if (false !== ($dirend = strpos($_POST['file'], '\\'))) {
 					if ($newHandle = opendir($dir."\\".$entry)) {
 						while (false !== ($inFolder = readdir($newHandle))) {
 							if ($inFolder != "." && $inFolder != ".." && $inFolder != $base.".css") {
-								$toArchive[] = $entry.'\\'.$inFolder;
+								$toArchive[] = $entry.'/'.$inFolder;
 							}
 						}
 						closedir($newHandle);
@@ -213,7 +213,7 @@ fwrite($fp, $content);
 fclose($fp);
 //echo "</pre>";
 
-$bases[$cssFileName] = "css\\$base.css";
+$bases[$cssFileName] = "css/$base.css";
 
 $toArchive[] = $cssFileName;
 $toArchive[] = "" . getcwd() . "\\templates\\" . $htmlFile;
@@ -247,8 +247,8 @@ echo  $newContent;
 echo "</pre>"; */
 
 foreach ($imagesToArchive as $image) {
-	$bases["images\\" . $image] = "img\\" . $image;
-	$toArchive[] = "images\\" . $image;//add each image to archive list
+	$bases["images/" . $image] = "img/" . $image;
+	$toArchive[] = "images/" . $image;//add each image to archive list
 }
 
 if (createZip($toArchive, $bases, "templates\\$base\\", "downloads\\template.zip", true)) {

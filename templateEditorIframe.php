@@ -55,6 +55,12 @@
 		<option class='imageOption' value='furley_bg.png'>Light Scratches</option>
 	";
 	
+	if (isset($_GET['template'])) {
+		$_FILES['file']['error'] = -1;
+		$_FILES['file']['name'] = $_GET['template'];
+		$_FILES['file']['tmp_name'] = getcwd() . "/templates/" . $_GET['template'];
+	}
+	
 	$file = "OneColumnTemplate.html";
 	if (isset($_GET['file']) && file_exists(getcwd() . "/templates/" . $_GET['file'])) {
 		$file = $_GET['file'];
