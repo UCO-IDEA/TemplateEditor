@@ -1,6 +1,7 @@
 var currentPage = 0;
 var css;
 var maxPage = 0;
+var showingStyleDemo = true;
 
 function resetMCE() {
 	$("#popup > #popupContainer > #content").tinymce().remove();
@@ -93,28 +94,47 @@ function roundNumber(num, dec) {
 	return result;
 }
 
+/*
+ *h1 {
+		font-size: 2.406em;
+	}
+	h2 {
+		font-size: 1.969em;
+	}
+	h3 {
+		font-size: 1.531em;
+	h4 {
+		font-size: 1.094em;
+	h5 {
+		font-size: 0.875em;
+	}
+	h6 {
+		font-size: 0.744em;
+	} 
+ */
+
 function changeHeaders(val) {
 	var h = new Array(7);
 	
 	switch (val) {
 		case "Largest": h[1] = 3.5; break;
 		case "Larger": h[1] = 3;break;
-		case "Large": h[1]=2.5; break;
-		case "Default": h[1] = 2; break;
+		case "Large": h[1]=2.7; break;
+		case "Default": h[1] = 2.4; break;
 		case "Small": h[1] = 1.5; break;
 	}
-	h[2] = roundNumber(h[1] * .75, 2);
-	h[3] = roundNumber(h[2] * .78, 2);
-	h[4] = roundNumber(h[3] * .85 ,2);
-	h[5] = roundNumber(h[4] * .83 ,2);
-	h[6] = roundNumber(h[5] * .90 ,2);
+	h[2] = roundNumber(h[1] * .81837, 2);
+	h[3] = roundNumber(h[2] * .77755, 2);
+	h[4] = roundNumber(h[3] * .71456 ,2);
+	h[5] = roundNumber(h[4] * .79982 ,2);
+	h[6] = roundNumber(h[5] * .58029 ,2);
 	
 	//alert(h[6] + " " + h[5] + " " + h[4] + " " + h[3] + " " + h[2] + " " + h[1]);
 	
 	for (var i = 1; i <= 6; i++) {
 		var regex = new RegExp(": [0-9\\.em ]+;/\\*h" + i + "Size", "gi");
 		
-		console.log(regex + " " + regex.test($('#contentCSS', iFrame).html()));
+		//console.log(regex + " " + regex.test($('#contentCSS', iFrame).html()));
 		
 		$('#contentCSS', iFrame).html($('#contentCSS', iFrame).html().replace(regex, ": " + h[i] + "em;/*h" + i + "Size"));
 	}
@@ -135,24 +155,31 @@ function changeBorderWidth(id, newVal) {
 	resetMCE();
 }
 
-$(window).bind('beforeunload', function(){
+$(window).bind('beforeunload', function(e) {
+	console.log(e);
 	return '>>>>>Before You Go<<<<<<<< \n Reloading or exiting this page could cause you to lose any undownloaded content! \n Please be careful when exiting.';
 });
 
 function getDefaults() {
 	//get defaults
-	$("p[id],h1[id],h2[id],h3[id],h4[id],h5[id],h6[id],blockquote[id]", iFrame).each( function(i) {
+	$("p[id],h1[id],h2[id],h3[id],h4[id],h5[id],h6[id],blockquote[id],span[id]", iFrame).each( function(i) {
 		if (!$("#Page" + currentPage + $(this).attr('id')).length) {
 			$("#Page" + currentPage + "Items").append("<input type='hidden' id='Page" + currentPage + $(this).attr('id') + "' name='Page" + currentPage + $(this).attr('id') + "' value='" + $(this).html() + "' />");
 		}
 	});
 }
 
- function getNewContent() {
+function getNewContent() {
 	$("#editorContent").prop('src', "templates/" + $("#file").val().replace('Template','Content'));
  }
 
+function getStyleDemoContent() {
+	$("#editorContent").prop('src', "templates/" + $("#file").val());
+	showingStyleDemo = true;
+}
+ 
 function changePage(id) {
+	showingStyleDemo = false;
 	var page = id; //get the 'Page1' part
 	
 	currentPage = parseInt(id.replace("Page", ""));
@@ -209,6 +236,7 @@ function changePage(id) {
 				
 				$("#btnEditContent").html("Add New Page");
 				$("#contentPages").append("<button type='button' class='changeTo' id='Page" + currentPage + "' >" + values[key] + "</button>");
+				$("#linkSelect").html($("#linkSelect").html() + "<option value='" +values[key]+"'>" +values[key]+"</option>");
 			} else if (key.indexOf("Page") !== -1 && key.indexOf("PageTitle") == -1) {
 				currentPage = parseInt(key.substring(4,5));
 				
@@ -223,15 +251,15 @@ function changePage(id) {
 		}
 	}
 	
-	$(".loading").hide('fast');
+	$("#loading").hide('fast');
  }
  
 $(document).ready(function() {
-	if (hasValues) {
-		$(".loading").show('fast');
+	if (!hasValues) {
+		$("#loading").hide('fast');
 	}
 	
-	$(".OpacitySelectors > .sliders").each(function(i, el) {
+	$(".opacityChange.sliders").each(function(i, el) {
 		el = $(el);
 		var val = $("#Input"+$(el).attr('id')).val()*100;
 		
@@ -250,7 +278,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(".fontSizeSelectors > .sliders").each(function(i, el) {
+	$(".FontSizeChange.sliders").each(function(i, el) {
 		el = $(el);
 		var val = $("#FontSize"+$(el).attr('id')).val();
 		
@@ -298,18 +326,18 @@ $(document).ready(function() {
 			css = $('#contentCSS', iFrame).html();
 		}
 		
-		$(iFrame).on('mouseenter', "p,h1,h2,h3,h4,h5,h6,blockquote", function() {
-			if ($(this).attr('id')) {
+		$(iFrame).on('mouseenter', "p,h1,h2,h3,h4,h5,h6,span,blockquote", function() {
+			if ($(this).attr('id') && !showingStyleDemo) {
 				$(this).css('cursor', 'url(../../images/edit.gif), crosshair');
 			}
 		}).on('mouseleave', "p,h1,h2,h3,h4,h5,h6,blockquote", function() {
-			if ($(this).attr('id')) {
+			if ($(this).attr('id') && !showingStyleDemo) {
 				$(this).css('cursor', 'auto');
 			}
 		 });
 		
-		$(iFrame).on('dblclick', "p,h1,h2,h3,h4,h5,h6,blockquote", function() {
-			if ($(this).attr('id')) {
+		$(iFrame).on('dblclick', "p,h1,h2,h3,h4,h5,h6,span,blockquote", function() {
+			if ($(this).attr('id') && !showingStyleDemo) {
 				//generate input area
 				$("#popup > #popupContainer > #content").val($(this).html());
 				$("#popup > #popupContainer > #toUpdate").val($(this).attr('id'));
@@ -326,7 +354,25 @@ $(document).ready(function() {
 		
 		if (hasContent) {
 			changePage('Page1');
+			$("#showStylePage").show();
 		}
+		
+		$(iFrame).on("click", "a", function(e) {
+			var relative = $(this).prop('href').substring($(this).prop('href').lastIndexOf('/') +1);
+			
+			for (var i = 1; i <= maxPage; i++) {
+				if ($("#Page" + i + "Name").val() + ".html" == relative) {
+					e.preventDefault();
+					changePage('Page' + i);
+					return;
+				}
+			}
+			
+			if (relative.substring(relative.length-1) != '#' && $(this).attr('target') != '_blank') {
+				$(this).attr('target', '_blank');
+				alert("All external links will open in new tab while in the editor.");
+			}
+		});
 	});
 	
 	$( "#tabs" ).tabs();
@@ -377,11 +423,11 @@ $(document).ready(function() {
 	
 	//style stuff
 	
-	$(".ImageSelectors > select").change(function() {
+	$("select.imageChange").change(function() {
 		changeImage($(this).attr('id'), $(this).prop('value'));
 	});
 	
-	$(".fontSelectors > select").change(function() {
+	$(".fontChange").change(function() {
 		changeFont($(this).attr('id'), $(this).val());
 	});
 	
@@ -394,8 +440,6 @@ $(document).ready(function() {
 	});
 	
 	//content stuff
-	
-	
 	$("#popupClose").click(function() {
 		$("#popup").hide(100);
 	});
@@ -407,31 +451,39 @@ $(document).ready(function() {
 	});
 	
 	$("#btnEditContent").click(function() {
-		$("#newFileName").val("Page" + (currentPage+1));
-		$("#newPageTitle").val("Page " + (currentPage+1));
+		$("#newFileName").val("Page" + (maxPage+1));
+		$("#newPageTitle").val("Page " + (maxPage+1));
 		$("#newFilePopup").show(100);
 	});
 	
 	//new File dialog
 	$("#newFileSubmit").click(function() {
+		showingStyleDemo = false;
+		
 		currentPage++;
 		maxPage++;
 		
-		$("form").append("<div id='Page"+ currentPage +"Items'></div>");
+		$("form").append("<div id='Page"+ maxPage +"Items'></div>");
 		
-		$("#Page" + currentPage + "Items").append("<input type='hidden' id='Page" + currentPage + "Name' name='Page" + currentPage + "FileName' value='" + $("#newFileName").val() + "' />");
-		$("#Page" + currentPage + "Items").append("<input type='hidden' id='Page" + currentPage + "Title' name='Page" + currentPage + "PageTitle' value='" + $("#newPageTitle").val() + "' />");
+		$("#Page" + maxPage + "Items").append("<input type='hidden' id='Page" + maxPage + "Name' name='Page" + maxPage + "FileName' value='" + $("#newFileName").val() + "' />");
+		$("#Page" + maxPage + "Items").append("<input type='hidden' id='Page" + maxPage + "Title' name='Page" + maxPage + "PageTitle' value='" + $("#newPageTitle").val() + "' />");
 		
 		getNewContent();
 		
 		$("#btnEditContent").html("Add New Page");
-		$("#contentPages").append("<button type='button' class='changeTo' id='Page" + currentPage + "' >" + $("#newFileName").val() + "</button>");
+		$("#showStylePage").show();
+		$("#contentPages").append("<button type='button' class='changeTo' id='Page" + maxPage + "' >" + $("#newFileName").val() + "</button>");
+		$("#linkSelect").html($("#linkSelect").html() + "<option value='" +$("#newFileName").val() +"'>" +$("#newFileName").val() +"</option>");
 		
 		$("#newFilePopup").hide(100);
 	});
 	
 	$("#contentPages").on('click', 'button', function() {
 		changePage(this.id);
+	});
+	
+	$("#showStylePage").click( function() {
+		getStyleDemoContent();
 	});
 	
 	$("#filePopupClose").click(function() {
@@ -457,6 +509,11 @@ $(document).ready(function() {
         theme_advanced_statusbar_location : "bottom",
         theme_advanced_resizing : false
    });
+   
+   $("#addLink").click(function() {
+		//add page link to mce
+		$("#popup > #popupContainer > #content").val($("#popup > #popupContainer > #content").val() + "<a href='"+$("#linkSelect").val()+".html'>"+$("#linkText").val()+"</a>");
+	});
    
    setTimeout(setValues, 1000);
 });

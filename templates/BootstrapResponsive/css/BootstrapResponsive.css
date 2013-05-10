@@ -50,6 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: #386289;/*Color8*//*Header Underline*/
 	border-width: 1px;/*BorderWidth1*//*Header Underline*/
 	padding-bottom: 5px;
+	line-height: 1em;
 }
 h1 {
 	font-size: 2.406em;/*h1Size*/
@@ -100,13 +101,13 @@ td
 	padding:5px;
 }
 a, .unvisted {
-
+	color: #003366;/*Color5*//*Header*/
 }
 a:visited, .visited {
-
+	color: #003366;/*Color5*//*Header*/
 }
 a:hover, .hover {
-
+	color: #003366;/*Color5*//*Header*/
 }
 blockquote {
 	background-image: none;/*BlockImage1*//*Blockquote Image*/

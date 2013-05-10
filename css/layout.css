@@ -2,18 +2,6 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,
 	margin:0;
 	padding:0;
 }
-.loading {
-	display: block;
-	position: absolute;
-	top:0px;
-	left:0px;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(200,200,200,80);
-	color: #fff;
-	text-align: center;
-	vertical-align: center;
-}
 table {
 	border-collapse:collapse;
 	border-spacing:0;

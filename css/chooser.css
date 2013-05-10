@@ -1,0 +1,9 @@
+.colorPalette {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+}
+
+#wholePalette {
+	border: 1px solid black;
+}

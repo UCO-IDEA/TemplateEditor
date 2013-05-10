@@ -36,14 +36,11 @@
 	
 	$imageOptions = "
 		<option class='imageOption' value='none'>None</option>
-		<option class='imageOption' value='Subtile_Diamonds.png'>Subtile Diamonds</option>
-		<option class='imageOption' value='diamond_upholstery.png'>Big Diamonds</option>
-		<option class='imageOption' value='white_wall.png'>White Wall</option>
-		<option class='imageOption' value='wall4.png'>Concrete Wall</option>
-	";
-	
-	$imageOptions = "
-		<option class='imageOption' value='none'>None</option>
+		<option class='imageOption' value='clean_textile.png'>Clean Textile</option>
+		<option class='imageOption' value='dark_wood.png'>Dark Wood</option>
+		<option class='imageOption' value='egg_shell.png'>Egg Shell</option>
+		<option class='imageOption' value='mochaGrunge.png'>Mocha Grunge</option>
+		<option class='imageOption' value='white_leather.png'>White Leather</option>
 		<option class='imageOption' value='Subtile_Diamonds.png'>Subtile Diamonds</option>
 		<option class='imageOption' value='diamond_upholstery.png'>Big Diamonds</option>
 		<option class='imageOption' value='white_wall.png'>White Wall</option>
@@ -132,6 +129,14 @@
 				<textarea id='content'></textarea>
 				<input type='hidden' id='toUpdate' value="" />
 				<button id='popupSubmit'>Submit Changes</button>
+				<span id='navigationOptions'>
+					Add a link - Link To:
+					<select id='linkSelect'>
+						
+					</select>
+					Link Text: <input type='text' id='linkText' />
+					<button id='addLink'>Add Link</button>
+				</span>
 			</div>
 		</div>
 		<div id='newFilePopup'>
@@ -149,54 +154,79 @@
 					<li><a href='#LooksTab'>Styling</a></li>
 				</ul>
 				<div id='FontsTab'>
-					<div class='fontSelectors'>
-					Fonts:
+					<span class='fontSelectors'>
+						<table class='editorTable'>
+							<tr><th colspan='50'>Fonts</th></tr>
+							<tr>
+							<?php
+								$fontCount = 1;
+								$fonts = array();
+								while (strpos($cssContent, "/*Font$fontCount") !== false) {
+									$pos = strpos($cssContent, "/*Font$fontCount");
+									$for = getDescription($pos);
+									
+									echo "<td>$for</td>";
+									
+									$fontCount++;
+								}
+								echo "</tr><tr>";
+								
+								for ($i = 1; $i < $fontCount; $i++) {
+									echo "<td><select class='fontChange' id='Font$i' name='Font$i'>$fontOptions</select></td>";
+								}
+								echo "</tr></table>";
+							?>
+					</span>
+					<span class='fontSizeSelectors'>
+					<table class='editorTable'>
+					<tr><th colspan='50'>Font Sizes</th></tr>
+					<tr>
 						<?php
 							$fontCount = 1;
-							
-							while (strpos($cssContent, "/*Font$fontCount") !== false) {
-								$pos = strpos($cssContent, "/*Font$fontCount");
-								$for = getDescription($pos);
-								
-								echo "$for<select class='fontChange' id='Font$fontCount' name='Font$fontCount'>$fontOptions</select>";
-								
-								$fontCount++;
-							}
-						?>
-					</div>
-					<div class='fontSizeSelectors'>
-					Font Sizes:
-						<?php
-							$fontCount = 1;
-							
+							$fonts = array();
 							while (strpos($cssContent, "/*FontSize$fontCount") !== false) {
 								$pos = strpos($cssContent, "/*FontSize$fontCount");
 								$start = strrpos($cssContent, ":", -(strlen($cssContent) - $pos)) + 1;
 								$currentVal = substr($cssContent, $start, $pos - $start - 3);
 								$for = getDescription($pos);
 								
-								echo "$for<input type='text' class='fontSizeChange' id='FontSize$fontCount' name='FontSize$fontCount' value='$currentVal' readonly='readonly'/><span class='FontSizeChange sliders' id='$fontCount'></span>";
-								
+								echo "<td>$for</td>";
+								$fonts[] = $currentVal;
 								$fontCount++;
 							}
+							echo "</tr><tr>";
+							
+							for ($fontCount = 1; $fontCount <= count($fonts); $fontCount++) {
+								echo "<td><input type='text' class='fontSizeChange' id='FontSize$fontCount' name='FontSize$fontCount' value='".$fonts[$fontCount-1]."' readonly='readonly'/><span class='FontSizeChange sliders' id='$fontCount'></span></td>";
+							}
+							echo "</tr></table>";
 						?>
-					</div>
-					<div class='headerOptions'>
-						Header Options:
-						<select id='headerSize' name='headerSize'>
-							<option value='Largest'>Largest</option>
-							<option value='Larger'>Larger</option>
-							<option value='Large'>Large</option>
-							<option value='Default' selected='selected'>Default</option>
-							<option value='Small'>Small</option>
-						</select>
-					</div>
+					</span>
+					<span class='headerOptions'>
+						<table class='editorTable'>
+							<tr><th colspan='50'>Header Options</th></tr>
+							<tr>
+								<td>
+									<select id='headerSize' name='headerSize'>
+										<option value='Largest'>Largest</option>
+										<option value='Larger'>Larger</option>
+										<option value='Large'>Large</option>
+										<option value='Default' selected='selected'>Default</option>
+										<option value='Small'>Small</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</span>
 				</div>
 				<div id='ColorsTab'>
-					<div class='OpacitySelectors'>
-					Opacity:
+					<span class='OpacitySelectors'>
+					<table class='editorTable'>
+						<tr><th colspan='50'>Opacity</th></tr>
+						<tr>
 						<?php
 							$opacityCount = 1;
+							$opacities = array();
 							
 							while (strpos($cssContent, "/*Opacity$opacityCount") !== false) {
 								$pos = strpos($cssContent, "/*Opacity$opacityCount");
@@ -205,26 +235,35 @@
 								$currentVal = substr($cssContent, $start, $end - $start-1);
 								$for = getDescription($pos);
 								
-								echo "<label for='InputOpacity$opacityCount'>$for<input type='text' value='" .$currentVal ."' id='InputOpacity$opacityCount' name='Opacity$opacityCount' readonly='readonly'/></label><span class='opacityChange sliders' id='Opacity$opacityCount'></span>";
+								echo "<td>$for</td>";
+								$opacities[] = $currentVal;
 								
 								$opacityCount++;
 							}
+							
+							echo "</tr><tr>";
+							
+							for($i = 0; $i < count($opacities); $i++) {
+								echo "<td><input type='text' value='" .$opacities[$i] ."' id='InputOpacity" . ($i+1) ."' name='Opacity" . ($i+1) ."' readonly='readonly'/><span class='opacityChange sliders' id='Opacity" . ($i+1) ."'></span></td>";
+							}
+							
+							echo "</tr></table>";
 						?>
-					</div>
-					<div class='colorChoosers'>
-					Colors:
+					</span>
+					<span class='colorChoosers'>
+						<table class='editorTable'>
+						<tr><th colspan='50'>Colors</th></tr>
+						<tr>
 						<?php 
 							$colorCount = 1;
 							
 							$colors = array();
-							echo "<table>";
-							echo "<tr>";
 							while (strpos($cssContent, "/*Color$colorCount") !== false) {
 								$pos = strpos($cssContent, "/*Color$colorCount");
 								
 								$for = getDescription($pos);
 								
-								echo "<td><label for='Color$colorCount'>$for</label></td>";
+								echo "<td>$for</td>";
 								$colors[] = substr($cssContent, $pos-7, 6);
 								
 								$colorCount++;
@@ -235,14 +274,15 @@
 							}
 							echo "</tr></table>";
 						?>
-					</div>
+					</span>
 				</div>
 				<div id='LooksTab'>
-					<div class='ImageSelectors'>
-					Images:
+					<span class='ImageSelectors'>
+						<table class='editorTable'>
+						<tr><th colspan='50'>Images</th></tr>
+						<tr>
 						<?php
 							$imageCount = 1;
-							
 							while (strpos($cssContent, "/*Image$imageCount") !== false) {
 								$pos = strpos($cssContent, "/*Image$imageCount");
 								$start = strrpos($cssContent, "Images/", -(strlen($cssContent) - $pos)) + strlen("Images/");
@@ -250,20 +290,28 @@
 								$currentVal = substr($cssContent, $start, $end - $start);
 								$for = getDescription($pos);
 								
-								echo "<label for='Image$imageCount'>$for</label><select class='imageChange' id='Image$imageCount' name='Image$imageCount'>
-								$imageOptions</select>";
+								
+								echo "<td>$for</td>";
 								
 								$imageCount++;
 							}
+							echo "</tr><tr>";
+							
+							for ($i = 1; $i < $imageCount; $i++) {
+								echo "<td><select class='imageChange' id='Image$i' name='Image$i'>$imageOptions</select></td>";
+							}
+							
+							echo "</tr></table>";
 						?>
-					</div>
+					</span>
 					
 					
-					<div class='BorderStyles'>
-					Border/Underline Styles:
+					<span class='BorderStyles'>
+						<table class='editorTable'>
+						<tr><th colspan='50'>Border/Underline Styles</th></tr>
+						<tr>
 						<?php
 							$borderCount = 1;
-							echo "<table class='editorTable'>";
 							echo "<tr><th>Changes</th><th>Thickness</th><th>Border Style</th></tr>";
 							while (strpos($cssContent, "/*BorderWidth$borderCount") !== false) {
 								$pos = strpos($cssContent, "/*BorderWidth$borderCount");
@@ -284,11 +332,12 @@
 							}
 							echo "</table>";
 						?>
-					</div>
+					</span>
 				</div>
 				<div>
 					<input type='hidden' name='file' id='file' value='<?php echo $file;?>' />
 					<button id='btnEditContent' type='button'>Edit Content</button>
+					<button id='showStylePage' type='button' style='display: none'>Show Style Demo</button>
 					<button id='submit' name='submit'>Download</button>
 					<div id='contentPages'>
 						
@@ -298,6 +347,6 @@
 		<iframe id='editorContent' style="padding: 5px; border: 1px solid black;" src='http://busn.uco.edu/cpde/TemplateEditor/templates/<?php echo $file; ?>' ></iframe>
 		</form>
 		
-		<div class='loading hide'>Loading...</div>
+		<div id='loading'>Loading...</div>
 	</body>
 </html>
