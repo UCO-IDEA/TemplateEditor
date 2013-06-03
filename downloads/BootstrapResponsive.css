@@ -1,8 +1,8 @@
 html body {
 	font-size: 100%;
-	font-family: "Helvetica Neue""Helvetica Neue", Helvetica, Arial, sans-serif; /*Font1*//*Body*/
-	background-image: none;/*Image1*//*Background*/
-	background-color: #919191; /*Color1*//*Background Color*/
+	font-family: "Helvetica Neue"Tahoma, Geneva, sans-serif; /*Font1*//*Body*/
+	background-image:url("../img/diamond_upholstery.png"); /*Image1*//*Background*/
+	background-color: #5b9eaa; /*Color1*//*Background Color*/
 }
 blockquote {
 	font-style:italic;
@@ -14,13 +14,13 @@ blockquote {
 	width: 100%;
 	height: 100%;
 	
-	background-color: #919191; /*Color1*/
-	opacity:0.8; /*Opacity1*//*Background Overlay*/
-	filter:Alpha(opacity=80); /*Opacity1Filter*/
+	background-color: #5b9eaa; /*Color1*/
+	opacity:0.27; /*Opacity1*//*Background Overlay*/
+	filter:Alpha(opacity=27); /*Opacity1Filter*/
 }
 
 .container {
-	background-color: #e7e7e7; /*Color2*//*Body Background*/
+	background-color: #f6f6f6; /*Color2*//*Body Background*/
 	opacity:1; /*Opacity2*//*Body*/
 	filter:Alpha(opacity=100); /*Opacity2Filter*/
 	color: #333333; /*Color4*//*Body Text*/
@@ -31,24 +31,24 @@ blockquote {
 }
 #footer {
 	margin-top: 20px;
-	background-color: #882518; /*Color3*//*Footer Background*/
-	color: #FFFFFF; /*Color7*//*Footer Text*/
-	font-size: 12px; /*FontSize3*//*Footer Text*/
+	background-color: #604576; /*Color3*//*Footer Background*/
+	color: #eaeaea; /*Color7*//*Footer Text*/
+	font-size:10px; /*FontSize3*//*Footer Text*/
 	text-align: center;
 	padding: 5px 0;
 }
 
 #main {
 	color: #333333; /*Color4*//*Body Text*/
-	font-size: 16px; /*FontSize1*//*Body Text*/
+	font-size:14px; /*FontSize1*//*Body Text*/
 	padding:5px 100px;
 }
 h1, h2, h3, h4, h5, h6 {
-	font-family:Georgia, serif; /*Font2*//*Header*/
-	color: #882518; /*Color5*//*Header*/
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; /*Font2*//*Header*/
+	color: #4c3262; /*Color5*//*Header*/
 	border-bottom-style: dotted; /*BorderStyle1*//*Header Underline*/
-	border-color: #7b7979; /*Color8*//*Header Underline*/
-	border-width: 2px; /*BorderWidth1*//*Header Underline*/
+	border-color: #257c73; /*Color6*//*Header Underline*/
+	border-width: 3px; /*BorderWidth1*//*Header Underline*/
 	padding-bottom: 5px;
 	line-height: 1em;
 }
@@ -74,26 +74,26 @@ h6 {
 	text-align: center;
 }
 td,th {
-	border-style: dotted; /*BorderStyle2*//*Table*/
-	border-color: #919191; /*Color11*//*Table Border*/
+	border-style: solid; /*BorderStyle2*//*Table*/
+	border-color: #4c3262; /*Color5*//*Header*/
 	border-width: 1px; /*BorderWidth2*//*Table*/
 }
 th {
 	vertical-align: top;
 	font-weight: normal;
-	font-size: 16px; /*FontSize2*//*Table Header*/
-	background-color: #882518; /*Color6*//*Table Header*/
-	color: #e7e7e7; /*Color2*//*Table Header Text*/
+	font-size:16px; /*FontSize2*//*Table Header*/
+	background-color: #4c3262; /*Color5*//*Header*/
+	color: #f6f6f6; /*Color2*//*Table Header Text*/
 	text-align:center;
 }
 table {
 	border-collapse:collapse;
 }
 tr:nth-child(even) {
-	background: #a5a5a5; /*Color9*//*Even Row*/
+	background: #f6f6f6; /*Color2*//*Body Background*/
 }
 tr:nth-child(odd) {
-	background: #919191; /*Color10*//*Odd Row*/
+	background: #f6f6f6; /*Color2b*/
 }
 td
 {
@@ -101,16 +101,16 @@ td
 	padding:5px;
 }
 a, .unvisted {
-	color: #882518; /*Color5*//*Header*/
+	color: #4c3262; /*Color5*//*Header*/
 }
 a:visited, .visited {
-	color: #882518; /*Color5*//*Header*/
+	color: #4c3262; /*Color5*//*Header*/
 }
 a:hover, .hover {
-	color: #882518; /*Color5*//*Header*/
+	color: #4c3262; /*Color5*//*Header*/
 }
 blockquote {
-	background-image: none;/*BlockImage1*//*Blockquote Image*/
-	background-repeat: no-repeat;
-	background-position: top left;
+	border-left-style: solid; /*BorderStyle3*//*Blockquote Separator*/
+	border-width: 5px; /*BorderWidth3*//*Blockquote Separator*/
+	border-color: #257c73; /*Color6*//*Header Underline*/
 }

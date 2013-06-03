@@ -4,6 +4,11 @@
 	display: block;
 }
 
+iframe#editorContent {
+	width: 100%;
+	height: 800px;
+}
+
 #loading {
 	display: block;
 	position: absolute;
@@ -11,8 +16,8 @@
 	top:0px;
 	left:0px;
 	width: 100%;
-	height: 100%;
-	background-color: rgba(200,200,200,.8);
+	height: 200%;
+	background-color: rgba(100,100,100,.85);
 	color: #fff;
 	text-align: center;
 	vertical-align: center;
@@ -45,6 +50,7 @@
 	padding: 5px 10px 5px;
 	margin:0px;
 	border: 1px solid #000;
+	font-size: 14px;
 	background-color: rgba(0,0,0,0);
 }
 

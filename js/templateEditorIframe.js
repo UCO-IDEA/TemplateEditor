@@ -2,6 +2,8 @@ var currentPage = 0;
 var css;
 var maxPage = 0;
 var showingStyleDemo = true;
+var isDownloading = false;
+var first = true;
 
 function resetMCE() {
 	$("#popup > #popupContainer > #content").tinymce().remove();
@@ -45,11 +47,26 @@ function changeColor(colorName, newColor) {
 	
 	$('#contentCSS', iFrame).html($('#contentCSS', iFrame).html().replace(regex, "#" + newColor + ";/*" + colorName+ "*/"));
 	
+	regex = new RegExp("#[0-9A-z]+;/\\*" + colorName+ "b\\*/", "gi");
+	
+	if (regex.test($('#contentCSS', iFrame).html())) {
+		
+		var rgbVals = [
+			"0" + (parseInt(newColor.substr(0,2),16) * .9).toString(16) + ".",
+			"0" + (parseInt(newColor.substr(2,2),16) * .9).toString(16) + ".",
+            "0" + (parseInt(newColor.substr(4,2),16) * .9).toString(16) + "."
+        ];
+		
+		var colorB = "#" + rgbVals[0].substring(rgbVals[0].indexOf(".") - 2, rgbVals[0].indexOf(".")) + rgbVals[1].substring(rgbVals[1].indexOf(".") - 2, rgbVals[1].indexOf(".")) + rgbVals[2].substring(rgbVals[2].indexOf(".") - 2, rgbVals[2].indexOf("."));
+		
+		$('#contentCSS', iFrame).html($('#contentCSS', iFrame).html().replace(regex, colorB + ";/*" + colorName+ "b*/"));
+	}
+	
 	resetMCE();
 }
 
 function changeFont(fontName, newFont) {
-	var regex = new RegExp(": [A-z,\" -]+;/\\*" + fontName+ "\\*/", "gi");
+	var regex = new RegExp(": [A-z, -]+;/\\*" + fontName+ "\\*/", "gi");
 	$('#contentCSS', iFrame).html($('#contentCSS', iFrame).html().replace(regex, ": " + newFont + ";/*" + fontName + "*/"));
 	resetMCE();
 }
@@ -81,11 +98,15 @@ function changeImage(imageName, newImage) {
 }
 
 function changeOpacity(opacityName, newOpacity) {
-	//alert($('#contentCSS').html());
 	var regex = new RegExp(": [0-9\\.]*;/\\*" + opacityName+ "\\*/", 'gi');
 	var filterRegex = new RegExp(":Alpha(opacity=[0-9]*);/\\*" + opacityName + "Filter\\*/", 'gi');
 	
-	$('#contentCSS', iFrame).html($('#contentCSS', iFrame).html().replace(regex, ": " + newOpacity + ";/*" +opacityName + "*/").replace(filterRegex, ":Alpha(opacity=" + (newOpacity * 100) + ");\*" + opacityName + "Filter*/"));
+	var t = $('#contentCSS', iFrame).html();
+	
+	t = t.replace(regex, ": " + newOpacity + ";/*" +opacityName + "*/");
+	t = t.replace(filterRegex, ":Alpha(opacity=" + (newOpacity * 100) + ");\*" + opacityName + "Filter*/");
+	
+	$('#contentCSS', iFrame).html(t);
 	resetMCE();
 }
 
@@ -93,25 +114,6 @@ function roundNumber(num, dec) {
 	var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
 	return result;
 }
-
-/*
- *h1 {
-		font-size: 2.406em;
-	}
-	h2 {
-		font-size: 1.969em;
-	}
-	h3 {
-		font-size: 1.531em;
-	h4 {
-		font-size: 1.094em;
-	h5 {
-		font-size: 0.875em;
-	}
-	h6 {
-		font-size: 0.744em;
-	} 
- */
 
 function changeHeaders(val) {
 	var h = new Array(7);
@@ -157,7 +159,11 @@ function changeBorderWidth(id, newVal) {
 
 $(window).bind('beforeunload', function(e) {
 	console.log(e);
-	return '>>>>>Before You Go<<<<<<<< \n Reloading or exiting this page could cause you to lose any undownloaded content! \n Please be careful when exiting.';
+	if (isDownloading) {
+		isDownloading = false;
+	} else {
+		return '>>>>>Before You Go<<<<<<<< \n Reloading or exiting this page could cause you to lose any undownloaded content! \n Please be careful when exiting.';
+	}
 });
 
 function getDefaults() {
@@ -252,6 +258,8 @@ function changePage(id) {
 	}
 	
 	$("#loading").hide('fast');
+	
+	css = $('#contentCSS', iFrame).html();
  }
  
 $(document).ready(function() {
@@ -268,8 +276,11 @@ $(document).ready(function() {
 			max: 100,
 			value: val,
 			slide: function(event, ui) {
-				changeOpacity($(this).attr('id'), ui.value/100);
+				console.log("test");
+				changeOpacity(this.id, ui.value/100);
+				console.log("test 2");
 				$("#Input"+$(this).attr('id')).val(ui.value/100);
+				console.log("test 3");
 			},
 			change: function(event, ui) {
 				changeOpacity($(this).attr('id'), ui.value/100);
@@ -319,10 +330,15 @@ $(document).ready(function() {
 	
 	$('#editorContent').on('load', function(e) {
 		iFrame = $('#editorContent').contents();
-		
+		if (first) {
+			this.style.height = (this.contentWindow.document.body.offsetHeight + 50) + 'px';
+			first = false;
+		}
 		if (css) {
+			console.log("setting css to page");
 			$('#contentCSS', iFrame).html(css);
 		} else {
+			console.log("getting css from page");
 			css = $('#contentCSS', iFrame).html();
 		}
 		
@@ -391,7 +407,7 @@ $(document).ready(function() {
 	function konamiReset() {
 		if (delay == 1) {
 			code = "";
-		} else  {
+		} else {
 			delay = 1;
 		}
 	}
@@ -413,13 +429,6 @@ $(document).ready(function() {
 	$("#headerSize").change(function() {
 		changeHeaders($(this).val());
 	});
-	
-/* 	$(":input").keypress(function(event) {
-		if (event.which == 13) {
-			event.preventDefault();
-			$(this).blur();
-		}
-	}); */
 	
 	//style stuff
 	
@@ -508,11 +517,15 @@ $(document).ready(function() {
         theme_advanced_toolbar_align : "left",
         theme_advanced_statusbar_location : "bottom",
         theme_advanced_resizing : false
-   });
+	});
    
    $("#addLink").click(function() {
 		//add page link to mce
 		$("#popup > #popupContainer > #content").val($("#popup > #popupContainer > #content").val() + "<a href='"+$("#linkSelect").val()+".html'>"+$("#linkText").val()+"</a>");
+	});
+   
+   $("#submit").click(function() {
+		isDownloading = true;
 	});
    
    setTimeout(setValues, 1000);

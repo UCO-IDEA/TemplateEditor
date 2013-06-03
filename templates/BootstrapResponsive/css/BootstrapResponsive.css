@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: Arial sans-serif;/*Font2*//*Header*/
 	color: #003366;/*Color5*//*Header*/
 	border-bottom-style: none;/*BorderStyle1*//*Header Underline*/
-	border-color: #386289;/*Color8*//*Header Underline*/
+	border-color: #386289;/*Color6*//*Header Underline*/
 	border-width: 1px;/*BorderWidth1*//*Header Underline*/
 	padding-bottom: 5px;
 	line-height: 1em;
@@ -75,14 +75,14 @@ h6 {
 }
 td,th {
 	border-style: none;/*BorderStyle2*//*Table*/
-	border-color: #386289;/*Color11*//*Table Border*/
+	border-color: #386289;/*Color5*//*Header*/
 	border-width: 1px;/*BorderWidth2*//*Table*/
 }
 th {
 	vertical-align: top;
 	font-weight: normal;
 	font-size: 16px;/*FontSize2*//*Table Header*/
-	background-color: #0C6A98;/*Color6*//*Table Header*/
+	background-color: #0C6A98;/*Color5*//*Header*/
 	color: #F4F9FD;/*Color2*//*Table Header Text*/
 	text-align:center;
 }
@@ -90,10 +90,10 @@ table {
 	border-collapse:collapse;
 }
 tr:nth-child(even) {
-	background: #CCCCCC;/*Color9*//*Even Row*/
+	background: #F4F9FD;/*Color2*//*Body Background*/
 }
 tr:nth-child(odd) {
-	background: #FFFFFF;/*Color10*//*Odd Row*/
+	background: #DCE1E4;/*Color2b*/
 }
 td
 {
@@ -110,7 +110,7 @@ a:hover, .hover {
 	color: #003366;/*Color5*//*Header*/
 }
 blockquote {
-	background-image: none;/*BlockImage1*//*Blockquote Image*/
-	background-repeat: no-repeat;
-	background-position: top left;
+	border-left-style: none;/*BorderStyle3*//*Blockquote Separator*/
+	border-width: 5px;/*BorderWidth3*//*Blockquote Separator*/
+	border-color: #eeeeee;/*Color6*//*Header Underline*/
 }

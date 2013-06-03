@@ -1,5 +1,11 @@
 <?php
 	header('Content-Type: text/html; charset=utf-8');
+	
+	/*echo "<pre>";
+		print_r($_GET);
+		print_r($_POST);
+		print_r($_FILES);
+	echo "</pre>";*/
 
 	function extractContent($start, $end, $content) {
 		$begin = strpos($content, $start);
@@ -52,10 +58,10 @@
 		<option class='imageOption' value='furley_bg.png'>Light Scratches</option>
 	";
 	
-	if (isset($_GET['template'])) {
+	if (isset($_POST['template'])) {
 		$_FILES['file']['error'] = -1;
-		$_FILES['file']['name'] = $_GET['template'];
-		$_FILES['file']['tmp_name'] = getcwd() . "/templates/" . $_GET['template'];
+		$_FILES['file']['name'] = $_POST['template'];
+		$_FILES['file']['tmp_name'] = getcwd() . "/templates/" . $_POST['template'];
 	}
 	
 	$file = "OneColumnTemplate.html";
@@ -95,7 +101,7 @@
 		return substr($cssContent, $start+2, $end-$start-2);
 	}
 ?>
-<html charset='utf-8'>
+<html>
 	<head>
 		<title>Template Editor</title>
 		
@@ -111,17 +117,18 @@
 		</script>
 		
 		
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery_1.9.1.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.2.js"></script>
 		<script type="text/javascript" src="js/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
+		
 		<script type="text/javascript" src="js/jquery.colorpicker.js"></script>
 		<script type="text/javascript" src='js/templateEditorIframe.js'></script>
 		
-		<link href="css/jquery.colorpicker.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" media="screen" type="text/css" href="css/jquery.colorpicker.css" />
 		<link rel="stylesheet" media="screen" type="text/css" href="css/jquery-ui-1.8.22.custom.css" />
 		<link rel="stylesheet" media="screen" type="text/css" href="css/view.css" />
-		<link rel="stylesheet" media="screen" type="text/css" href="css/iFrameLayout.css" />
 	</head>
+	
 	<body>
 		<div id='popup'>
 			<div id='popupContainer'>
@@ -134,7 +141,7 @@
 					<select id='linkSelect'>
 						
 					</select>
-					Link Text: <input type='text' id='linkText' />
+					Link Text: <input type='text' id='linkText' >
 					<button id='addLink'>Add Link</button>
 				</span>
 			</div>
@@ -197,7 +204,7 @@
 							echo "</tr><tr>";
 							
 							for ($fontCount = 1; $fontCount <= count($fonts); $fontCount++) {
-								echo "<td><input type='text' class='fontSizeChange' id='FontSize$fontCount' name='FontSize$fontCount' value='".$fonts[$fontCount-1]."' readonly='readonly'/><span class='FontSizeChange sliders' id='$fontCount'></span></td>";
+								echo "<td><input type='text' class='fontSizeChange' id='FontSize$fontCount' name='FontSize$fontCount' value='".$fonts[$fontCount-1]."' readonly='readonly' ><span class='FontSizeChange sliders' id='$fontCount'></span></td>";
 							}
 							echo "</tr></table>";
 						?>
@@ -244,7 +251,7 @@
 							echo "</tr><tr>";
 							
 							for($i = 0; $i < count($opacities); $i++) {
-								echo "<td><input type='text' value='" .$opacities[$i] ."' id='InputOpacity" . ($i+1) ."' name='Opacity" . ($i+1) ."' readonly='readonly'/><span class='opacityChange sliders' id='Opacity" . ($i+1) ."'></span></td>";
+								echo "<td><input type='text' value='" .$opacities[$i] ."' id='InputOpacity" . ($i+1) ."' name='Opacity" . ($i+1) ."' readonly='readonly' /><span class='opacityChange sliders' id='Opacity" . ($i+1) ."'></span></td>";
 							}
 							
 							echo "</tr></table>";
@@ -270,7 +277,7 @@
 							}
 							echo "</tr><tr>";
 							for ($i = 0; $i < count($colors); $i++) {
-								echo "<td><input class='color' type='text' id='Color" . ($i+1) . "' name='Color" . ($i+1) ."' value='" . $colors[$i] . "' style='background-color:" . $colors[$i] . "' /></td>";
+								echo "<td><input class='color' type='text' id='Color" . ($i+1) . "' name='Color" . ($i+1) ."' value='" . $colors[$i] . "' style='background-color:" . $colors[$i] . "'  readonly='readonly' /></td>";
 							}
 							echo "</tr></table>";
 						?>
@@ -320,7 +327,7 @@
 								$currentVal = substr($cssContent, $start, $end - $start-1);
 								$for = getDescription($pos);
 								
-								echo "<tr><td>$for</td><td><input type='text' class='borderWidthChange' id='InputBorderWidth$borderCount' name='BorderWidth$borderCount' value='$currentVal' readonly='readonly'/><div style='width: 200px;' class='BorderWidthChange BorderSliders' id='BorderWidth$borderCount'></div></td><td>";
+								echo "<tr><td>$for</td><td><input type='text' class='borderWidthChange' id='InputBorderWidth$borderCount' name='BorderWidth$borderCount' value='$currentVal' readonly='readonly' /><div style='width: 200px;' class='BorderWidthChange BorderSliders' id='BorderWidth$borderCount'></div></td><td>";
 								
 								if (strpos($cssContent, "/*BorderStyle$borderCount") !== false) {
 									echo "<select class='borderStyleChange' id='BorderStyle$borderCount' name='BorderStyle$borderCount'>$borderStyleOptions</select>";
@@ -344,7 +351,8 @@
 					</div>
 				</div>
 		</div>
-		<iframe id='editorContent' style="padding: 5px; border: 1px solid black;" src='http://busn.uco.edu/cpde/TemplateEditor/templates/<?php echo $file; ?>' ></iframe>
+		<hr />
+		<iframe id='editorContent' style="border: 1px solid black;" src='http://busn.uco.edu/cpde/TemplateEditor/templates/<?php echo $file; ?>' ></iframe>
 		</form>
 		
 		<div id='loading'>Loading...</div>

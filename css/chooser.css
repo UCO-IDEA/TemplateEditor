@@ -1,9 +1,34 @@
-.colorPalette {
-	display: inline-block;
-	width: 20px;
-	height: 20px;
+.colorsList {
+	display: none;
+}
+
+.preview {
+	cursor: pointer;
+}
+
+.preview:hover {
+	text-decoration: underline;
+}
+
+body {
+
+}
+
+select {
+	vertical-align: baseline;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.span12  {
+	margin-left: 15px !important;
+	padding-left: 15px;
 }
 
 #wholePalette {
 	border: 1px solid black;
+}
+
+.span12, .span6 {
+	padding-bottom: 10px;
 }
